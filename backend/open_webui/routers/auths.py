@@ -51,6 +51,7 @@ from open_webui.utils.webhook import post_webhook
 from open_webui.utils.access_control import get_permissions
 
 from typing import Optional, List
+from urllib.parse import unquote
 
 from ssl import CERT_NONE, CERT_REQUIRED, PROTOCOL_TLS
 
@@ -371,7 +372,7 @@ async def signin(request: Request, response: Response, form_data: SigninForm):
             await signup(
                 request,
                 response,
-                SignupForm(email=trusted_email, password=str(uuid.uuid4()), name=trusted_name),
+                SignupForm(email=trusted_email, password=str(uuid.uuid4()), name=unquote(trusted_name)),
             )
         user = Auths.authenticate_user_by_trusted_header(request)
 
